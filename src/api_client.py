@@ -18,7 +18,7 @@ class NimbusApiClient:
         self,
         base_url: str = "http://localhost:11434/v1",
         api_key: str = "ollama",
-        default_model: str = "gemma4:e2b",
+        default_model: str = "gemma2:2b",
         timeout: float = 30.0,
         max_retries: int = 3,
         backoff_factor: float = 1.5,

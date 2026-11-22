@@ -4,7 +4,7 @@ import time
 import subprocess
 import requests
 
-def check_ollama_ready(model_name: str = "gemma4:e2b", max_wait_sec: int = 1200) -> bool:
+def check_ollama_ready(model_name: str = "gemma2:2b", max_wait_sec: int = 1200) -> bool:
     print(f"Checking if Ollama service is up and '{model_name}' is loaded...")
     start_time = time.time()
     while time.time() - start_time < max_wait_sec:
@@ -25,7 +25,8 @@ def check_ollama_ready(model_name: str = "gemma4:e2b", max_wait_sec: int = 1200)
     return False
 
 def main():
-    model = "gemma4:e2b"
+    model = "gemma2:2b"
+    python_exe = "python3.12"
     print("=====================================================================")
     print(" Nimbus Ridge Weather Bulletin Service - Automated Experiment Pipeline")
     print(f" Target Model: {model}")
@@ -38,16 +39,16 @@ def main():
     # 1. Run experiments
     print("\n>>> Step 1: Executing Controlled Experiment Grid...")
     t0 = time.time()
-    subprocess.run([sys.executable, "src/experiment_runner.py", "--model", model], check=True)
+    subprocess.run([python_exe, "src/experiment_runner.py", "--model", model], check=True)
     print(f"Experiment execution completed in {time.time() - t0:.1f}s")
 
     # 2. Evaluate metrics
     print("\n>>> Step 2: Evaluating Diversity, Faithfulness, and Length Metrics...")
-    subprocess.run([sys.executable, "src/evaluate_metrics.py"], check=True)
+    subprocess.run([python_exe, "src/evaluate_metrics.py"], check=True)
 
     # 3. Plot results
     print("\n>>> Step 3: Generating Visualizations and Charts...")
-    subprocess.run([sys.executable, "src/plot_results.py"], check=True)
+    subprocess.run([python_exe, "src/plot_results.py"], check=True)
 
     print("\n=====================================================================")
     print(" ALL PIPELINE STEPS COMPLETED SUCCESSFULLY!")
